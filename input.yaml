@@ -1,0 +1,18 @@
+test: test
+test2:
+  - test1
+  - test3
+schemas:
+  Connections:
+    uuid:
+      type: UUID
+      description: A uuid for X
+  Items:
+    uuid:
+      type: UUID
+    value:
+      type: integer
+
+component:
+  tables:
+    Connections: ...
