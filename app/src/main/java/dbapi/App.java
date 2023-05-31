@@ -18,8 +18,8 @@ public class App {
         Yaml yaml = new Yaml();
         InputStream input = new FileInputStream("input.yaml");
         Map<String, Object> obj = (Map) yaml.load(input);
-        Map<String, Object> schemas = (Map) obj.get("schemas");
-        System.out.println(schemas.keySet());
+        Map<String, Object> component = (Map) obj.get("component");
+        System.out.println(component.keySet());
         List<String> l = (List) obj.get("test2");
         System.out.println(obj);
         System.out.println(l.get(0));
@@ -29,6 +29,6 @@ public class App {
         InputStream input2 = new FileInputStream("input1.yaml");
         Customer obj2 = (Customer) yaml2.load(input2);
         System.out.println(obj2.name);
-
+        System.out.println(obj2.age);
     }
 }

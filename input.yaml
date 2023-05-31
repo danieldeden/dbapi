@@ -7,6 +7,21 @@ schemas:
     uuid:
       type: UUID
       description: A uuid for X
+    scenarioID:
+      type: UUID
+      description: Id for the scenario
+    serviceProvider:
+      type: UUID
+      description: UUID of the service provider
+    serviceConsumer:
+      type: UUID
+      description: UUID of the service consumer
+    createdBy:
+      type: string
+      description: Name of the creator
+    createdAt:
+      type: timestamp
+      description: Date and time at which the service was created
   Items:
     uuid:
       type: UUID
@@ -15,4 +30,16 @@ schemas:
 
 component:
   tables:
-    Connections: ...
+    Connections:
+      uuid:
+        type: UUID
+      scenarioID:
+        type: UUID
+      serviceProvider:
+        type: UUID
+      serviceConsumer:
+        type: UUID
+      createdBy:
+        type: string
+      createdAt:
+        type: timestamp
