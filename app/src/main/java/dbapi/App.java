@@ -9,17 +9,67 @@ import org.yaml.snakeyaml.constructor.Constructor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 public class App {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
+
         Yaml yaml = new Yaml();
         InputStream input = new FileInputStream("input.yaml");
+
         Map<String, Object> obj = (Map) yaml.load(input);
-        Map<String, Object> component = (Map) obj.get("component");
-        System.out.println(component.keySet());
+        Map<String, Object> schemas = (Map) obj.get("schemas");
+        Map<String, Object> entity = (Map) schemas.get("entity");
+        Map<String, Object> tableName = (Map) schemas.get("tableName");
+        Map<String, Object> connections = (Map) tableName.get("connections");
+        Map<String, Object> columns = (Map) connections.get("columns");
+        Map<String, Object> uuid = (Map) columns.get("uuid");
+        Map<String, Object> scenarioID = (Map) columns.get("scenarioID");
+        Map<String, Object> providerUUID = (Map) columns.get("providerUUID");
+        Map<String, Object> consumerUUID = (Map) columns.get("consumerUUID");
+        Map<String, Object> createdBy = (Map) columns.get("createdBy");
+        Map<String, Object> createdAt = (Map) columns.get("createdAt");
+
+        SqlGenerator sqlGenerator = new SqlGenerator();
+        sqlGenerator.writeDatabaseFile(
+                tableName,
+                connections,
+                columns,
+                uuid,
+                scenarioID,
+                providerUUID,
+                consumerUUID,
+                createdBy,
+                createdAt);
+
+        RepositoryGenerator repositoryGenerator = new RepositoryGenerator();
+        repositoryGenerator.writeRepositoryFile(
+                uuid,
+                entity);
+
+        HibernateGenerator hibernateGenerator = new HibernateGenerator();
+        hibernateGenerator.writeHibernateFile(
+                tableName,
+                columns,
+                uuid,
+                scenarioID,
+                providerUUID,
+                consumerUUID,
+                createdBy,
+                createdAt,
+                entity);
+
+        /*
+        System.out.println(schemas.keySet());
+        System.out.println(tableName.keySet());
+        Map<String, Object> con = (Map) tableName.get(tableName.keySet().stream().toList().get(0));
+        System.out.println(con);
+        System.out.println(tableName.keySet().stream().toList().get(0));
+        System.out.println(tableName.keySet().stream().toList().get(1));
         List<String> l = (List) obj.get("test2");
         System.out.println(obj);
         System.out.println(l.get(0));
@@ -30,5 +80,6 @@ public class App {
         Customer obj2 = (Customer) yaml2.load(input2);
         System.out.println(obj2.name);
         System.out.println(obj2.age);
+         */
     }
 }

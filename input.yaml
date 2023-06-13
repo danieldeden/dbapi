@@ -2,44 +2,81 @@ test: test
 test2:
   - test1
   - test3
-schemas:
-  Connections:
-    uuid:
-      type: UUID
-      description: A uuid for X
-    scenarioID:
-      type: UUID
-      description: Id for the scenario
-    serviceProvider:
-      type: UUID
-      description: UUID of the service provider
-    serviceConsumer:
-      type: UUID
-      description: UUID of the service consumer
-    createdBy:
-      type: string
-      description: Name of the creator
-    createdAt:
-      type: timestamp
-      description: Date and time at which the service was created
-  Items:
-    uuid:
-      type: UUID
-    value:
-      type: integer
 
-component:
-  tables:
-    Connections:
-      uuid:
-        type: UUID
-      scenarioID:
-        type: UUID
-      serviceProvider:
-        type: UUID
-      serviceConsumer:
-        type: UUID
-      createdBy:
-        type: string
-      createdAt:
-        type: timestamp
+tableName:
+  - Name1
+  - Name2
+  - Name3
+
+columns:
+  - Column1
+  - Column2
+  - Column3
+
+fileLocation:
+  - crudRepo: src/main/java/se/bnearit/connectionitem/service
+  - hibernatePOJO: src/main/java/se/bnearit/connectionitem/model
+  - sqlMigration: src/main/resources/db/migration
+
+schemas:
+  tableName:
+    connections:
+      columns:
+        uuid:
+          type: UUID
+          nullable: NOT NULL
+        scenarioID:
+          type: UUID
+          nullable: NOT NULL
+        providerUUID:
+          type: UUID
+          nullable: NOT NULL
+        consumerUUID:
+          type: UUID
+          nullable: NOT NULL
+        createdBy:
+          type: TEXT
+          nullable: NOT NULL
+        createdAt:
+          type: TIMESTAMP
+          nullable: NOT NULL
+      primaryKey: uuid
+    OtherThablle:
+      columns:
+        uuid:
+          type: UUID
+          nullable: boolean
+        scenarioID:
+          type: UUID
+          nullable: boolean
+        providerUUID:
+          type: UUID
+          nullable: boolean
+        consumerUUID:
+          type: UUID
+          nullable: boolean
+        createdBy:
+          type: TEXT
+          nullable: boolean
+        createdAt:
+          type: TIMESTAMP
+          nullable: boolean
+      primaryKey: uuid
+  entity:
+    Connection:
+  fileLocation:
+    crudRepo: ../src/main/java/se/bnearit/connectionitem/service
+    hibernatePOJO: ../src/main/java/se/bnearit/connectionitem/model
+    sqlMigration: ../src/main/resources/db/migration
+
+
+
+    #Items:
+    #  columns:
+    #    dbid:
+    #      type: integer
+    #    uuid:
+    #      type: UUID
+    #    value:
+    #      type: integer
+    #  primaryKey: dbid
