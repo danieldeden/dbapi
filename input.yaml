@@ -19,7 +19,7 @@ fileLocation:
   - sqlMigration: src/main/resources/db/migration
 
 schemas:
-  tableName:
+  tables:
     connections:
       columns:
         uuid:

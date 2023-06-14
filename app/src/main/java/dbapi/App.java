@@ -3,11 +3,13 @@
  */
 package dbapi;
 
+import dbapi.data.Table;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public class App {
@@ -20,7 +22,7 @@ public class App {
         Map<String, Object> obj = (Map) yaml.load(input);
         Map<String, Object> schemas = (Map) obj.get("schemas");
         Map<String, Object> entity = (Map) schemas.get("entity");
-        Map<String, Object> tableName = (Map) schemas.get("tableName");
+        Map<String, Object> tableName = (Map) schemas.get("tables");
         Map<String, Object> connections = (Map) tableName.get("connections");
         Map<String, Object> columns = (Map) connections.get("columns");
         Map<String, Object> uuid = (Map) columns.get("uuid");
@@ -29,6 +31,10 @@ public class App {
         Map<String, Object> consumerUUID = (Map) columns.get("consumerUUID");
         Map<String, Object> createdBy = (Map) columns.get("createdBy");
         Map<String, Object> createdAt = (Map) columns.get("createdAt");
+
+        SchemaParser sp = new SchemaParser();
+        List<Table> tables = sp.parse(obj);
+        System.out.println(tables);
 
         SqlGenerator sqlGenerator = new SqlGenerator();
         sqlGenerator.writeDatabaseFile(
