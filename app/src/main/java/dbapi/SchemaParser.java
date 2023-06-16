@@ -22,11 +22,11 @@ public class SchemaParser {
                 Column.Builder columnBuilder = new Column.Builder();
                 columnBuilder.name(columnName);
                 columnBuilder.type((String) columnNode.get("type"));
-                // TODO: nullable
+                columnBuilder.nullable(Boolean.parseBoolean((String) columnNode.get("nullable")));
                 Column column = columnBuilder.build();
                 tableBuilder.addColumn(column);
             }
-            // TODO: primary key
+            tableBuilder.primaryKey((String) tableNode.keySet().stream().toList().get(1));
             tables.add(tableBuilder.build());
         }
         return tables;

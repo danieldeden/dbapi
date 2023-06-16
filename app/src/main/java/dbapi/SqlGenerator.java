@@ -1,21 +1,21 @@
 package dbapi;
 
+import dbapi.data.Table;
+
 import java.io.*;
-import java.util.Map;
+import java.util.List;
 
 public class SqlGenerator {
 
-    public void writeDatabaseFile(Map<String, Object> tableName,
-                                  Map<String, Object> connections,
-                                  Map<String, Object> columns,
-                                  Map<String, Object> uuid,
-                                  Map<String, Object> scenarioID,
-                                  Map<String, Object> providerUUID,
-                                  Map<String, Object> consumerUUID,
-                                  Map<String, Object> createdBy,
-                                  Map<String, Object> createdAt) throws FileNotFoundException {
-
-        String writeDatabase =
+    public void writeDatabaseFile(List<Table> tables) throws FileNotFoundException {
+        try (FileWriter databaseWriter = new FileWriter("V1__init.sql")) {
+            String table = "";
+            String columnName = "";
+            String columnType = "";
+            String columnNullable = "";
+            String saveAsPrimaryKey = "";
+            databaseWriter.write("CREATE SEQUENCE public.hibernate_sequence;");
+                /*
                 "CREATE SEQUENCE public.hibernate_sequence;" +
                 "\n\n" + "CREATE TABLE " + tableName.keySet().stream().toList().get(0) + " (\n" +
                 columns.keySet().stream().toList().get(0) + " " + uuid.get("type") + " " + uuid.get("nullable") + ",\n" +
@@ -26,9 +26,22 @@ public class SqlGenerator {
                 columns.keySet().stream().toList().get(5) + " " + createdAt.get("type") + " with time zone " + createdAt.get("nullable") +  ",\n" +
                 "CONSTRAINT " + connections.keySet().stream().toList().get(1) + " PRIMARY KEY (" + connections.get("primaryKey") + ")\n" +
                 ");";
+                */
 
-        try (FileWriter databaseWriter = new FileWriter("V1__init.sql")) {
-            databaseWriter.write(writeDatabase);
+            for (int tableNames = 0; tableNames < tables.size(); tableNames++) {
+                table = "\n\nCREATE TABLE " + tables.get(tableNames).getName() + " (\n";
+                databaseWriter.write(table);
+                for (int amountOfColumns = 0; amountOfColumns < tables.get(tableNames).getColumns().size(); amountOfColumns++) {
+                    columnName = tables.get(tableNames).getColumns().get(amountOfColumns).getName();
+                    if (amountOfColumns == 0){
+                        saveAsPrimaryKey = columnName;
+                    }
+                    columnType = " " + tables.get(tableNames).getColumns().get(amountOfColumns).getType();
+                    columnNullable = " " + tables.get(tableNames).getColumns().get(amountOfColumns).isNullable();
+                    databaseWriter.write("  " + columnName + columnType + columnNullable + "\n");
+                }
+                databaseWriter.write("CONSTRAINT " + tables.get(tableNames).getPrimaryKey() + " PRIMARY KEY (" + saveAsPrimaryKey + ")\n);");
+            }
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
             System.err.println("An error occurred while writing to the file: " + e.getMessage());

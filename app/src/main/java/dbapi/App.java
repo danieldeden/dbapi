@@ -37,16 +37,7 @@ public class App {
         System.out.println(tables);
 
         SqlGenerator sqlGenerator = new SqlGenerator();
-        sqlGenerator.writeDatabaseFile(
-                tableName,
-                connections,
-                columns,
-                uuid,
-                scenarioID,
-                providerUUID,
-                consumerUUID,
-                createdBy,
-                createdAt);
+        sqlGenerator.writeDatabaseFile(tables);
 
         RepositoryGenerator repositoryGenerator = new RepositoryGenerator();
         repositoryGenerator.writeRepositoryFile(
