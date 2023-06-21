@@ -11,6 +11,7 @@ public class SchemaParser {
     public List<Table> parse(Map<String, Object> obj) {
         Map<String, Object> schemasNode = (Map) obj.get("schemas");
         Map<String, Object> tablesNode = (Map) schemasNode.get("tables");
+        Map<String, Object> entityNode = (Map) schemasNode.get("entity");
         List<Table> tables = new ArrayList<>();
         for (String tableName : tablesNode.keySet()) {
             Table.Builder tableBuilder = new Table.Builder();
@@ -27,6 +28,7 @@ public class SchemaParser {
                 tableBuilder.addColumn(column);
             }
             tableBuilder.primaryKey((String) tableNode.keySet().stream().toList().get(1));
+            tableBuilder.entity((String) entityNode.keySet().stream().toList().get(0));
             tables.add(tableBuilder.build());
         }
         return tables;

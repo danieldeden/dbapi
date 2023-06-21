@@ -40,9 +40,7 @@ public class App {
         sqlGenerator.writeDatabaseFile(tables);
 
         RepositoryGenerator repositoryGenerator = new RepositoryGenerator();
-        repositoryGenerator.writeRepositoryFile(
-                uuid,
-                entity);
+        repositoryGenerator.writeRepositoryFile(tables);
 
         HibernateGenerator hibernateGenerator = new HibernateGenerator();
         hibernateGenerator.writeHibernateFile(

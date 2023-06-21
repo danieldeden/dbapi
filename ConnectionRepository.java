@@ -9,5 +9,5 @@ import se.bnearit.connectionitem.model.Connection;
  *
  * @author andreas.everos
  */
-public interface ConnectionRepository extends CrudRepository<Connection,UUID> {
+public interface ConnectionRepository extends CrudRepository<Connection, UUID> {
 }

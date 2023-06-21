@@ -7,7 +7,7 @@ CREATE TABLE connections (
   consumerUUID UUID false
   createdBy TEXT false
   createdAt TIMESTAMP false
-CONSTRAINT primaryKey PRIMARY KEY (uuid)
+  CONSTRAINT primaryKey PRIMARY KEY (uuid)
 );
 
 CREATE TABLE OtherThablle (
@@ -17,5 +17,5 @@ CREATE TABLE OtherThablle (
   consumerUUID UUID false
   createdBy TEXT false
   createdAt TIMESTAMP false
-CONSTRAINT primaryKey PRIMARY KEY (uuid)
+  CONSTRAINT primaryKey PRIMARY KEY (uuid)
 );

@@ -7,12 +7,14 @@ public class Table {
     private String name;
     private List<Column> columns;
     private String primaryKey;
+    private String entity;
 
 
-    private Table(String name, List<Column> columns, String primaryKey) {
+    private Table(String name, List<Column> columns, String primaryKey, String entity) {
         this.name = name;
         this.columns = columns;
         this.primaryKey = primaryKey;
+        this.entity = entity;
     }
 
     public String getName() {
@@ -23,14 +25,15 @@ public class Table {
         return columns;
     }
 
-    public String getPrimaryKey() {return primaryKey; }
-
+    public String getPrimaryKey() { return primaryKey; }
+    public String getEntity() { return entity; }
 
 
     public static class Builder {
         private String name;
         private List<Column> columns = new ArrayList<>();
         private String primaryKey;
+        private String entity;
 
         public Builder Builder() {
             return this;
@@ -51,8 +54,13 @@ public class Table {
             return this;
         }
 
+        public Builder entity(String entity){
+            this.entity = entity;
+            return this;
+        }
+
         public Table build() {
-            return new Table(this.name, this.columns, this.primaryKey);
+            return new Table(this.name, this.columns, this.primaryKey, this.entity);
         }
     }
 }
