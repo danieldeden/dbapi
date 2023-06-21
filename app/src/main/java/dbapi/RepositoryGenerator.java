@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RepositoryGenerator {
-    public void writeRepositoryFile(List<Table> tables){
+    public void writeRepositoryFile(Table table){
         /*
         "package se.bnearit.connectionitem.service;" +
         "\n\n" +
@@ -24,17 +24,17 @@ public class RepositoryGenerator {
         "public interface ConnectionRepository extends CrudRepository<" + entity.keySet().stream().toList().get(0) + "," + uuid.get("type") + "> {\n}";
         */
 
-        try (FileWriter repositoryWriter = new FileWriter("ConnectionRepository.Java")){
+        try (FileWriter repositoryWriter = new FileWriter(table.getName() + "Repository.Java")){
             repositoryWriter.write("package se.bnearit.connectionitem.service;\n\n" +
                     "import java.util.UUID;\n" +
                     "import org.springframework.data.repository.CrudRepository;\n" +
-                    "import se.bnearit.connectionitem.model." + tables.get(0).getEntity() + ";\n\n" +
+                    "import se.bnearit.connectionitem.model." + table.getName() + ";\n\n" +
                     "/**\n" +
-                    " * Interface to interact with the database table for {@link " + tables.get(0).getEntity() + "}\n" +
+                    " * Interface to interact with the database table for {@link " + table.getName() + "}\n" +
                     " *\n" +
-                    " * @author andreas.everos\n" +
+                    " * @author generator\n" +
                     " */\n" +
-                    "public interface ConnectionRepository extends CrudRepository<" + tables.get(0).getEntity() + ", UUID> {\n}");
+                    "public interface ConnectionRepository extends CrudRepository<" + table.getName() + ", UUID> {\n}");
 
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {

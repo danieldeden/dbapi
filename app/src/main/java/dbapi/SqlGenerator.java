@@ -1,5 +1,6 @@
 package dbapi;
 
+import dbapi.data.Column;
 import dbapi.data.Table;
 
 import java.io.*;
@@ -21,30 +22,25 @@ public class SqlGenerator {
         ");";
         */
         try (FileWriter databaseWriter = new FileWriter("V1__init.sql")) {
-            String table = "";
-            String columnName = "";
-            String columnType = "";
-            String columnNullable = "";
-            String saveAsPrimaryKey = "";
 
             databaseWriter.write("CREATE SEQUENCE public.hibernate_sequence;");
 
             // Loops through all the tables
-            for (int tableNames = 0; tableNames < tables.size(); tableNames++) {
-                table = "\n\nCREATE TABLE " + tables.get(tableNames).getName() + " (\n";
+            for (Table tableItem : tables) {
+                String table = "\n\nCREATE TABLE " + tableItem.getName() + " (\n";
                 databaseWriter.write(table);
 
                 // Loops through the columns of the tables
-                for (int amountOfColumns = 0; amountOfColumns < tables.get(tableNames).getColumns().size(); amountOfColumns++) {
-                    columnName = tables.get(tableNames).getColumns().get(amountOfColumns).getName();
-                    if (amountOfColumns == 0){
-                        saveAsPrimaryKey = columnName;
+                for (Column columnItem : tableItem.getColumns()) {
+                    String columnName = columnItem.getName();
+                    String columnType = " " + columnItem.getType();
+                    String columnNullable = "";
+                    if (!columnItem.isNullable()) {
+                        columnNullable = " NOT NULL";
                     }
-                    columnType = " " + tables.get(tableNames).getColumns().get(amountOfColumns).getType();
-                    columnNullable = " " + tables.get(tableNames).getColumns().get(amountOfColumns).isNullable();
                     databaseWriter.write("  " + columnName + columnType + columnNullable + "\n");
                 }
-                databaseWriter.write("  CONSTRAINT " + tables.get(tableNames).getPrimaryKey() + " PRIMARY KEY (" + saveAsPrimaryKey + ")\n);");
+                databaseWriter.write("  CONSTRAINT " + tableItem.getName() + "PK PRIMARY KEY (" + tableItem.getPrimaryKey() + ")\n);");
             }
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {

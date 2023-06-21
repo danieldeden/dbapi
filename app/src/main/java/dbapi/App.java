@@ -23,7 +23,7 @@ public class App {
         Map<String, Object> schemas = (Map) obj.get("schemas");
         Map<String, Object> entity = (Map) schemas.get("entity");
         Map<String, Object> tableName = (Map) schemas.get("tables");
-        Map<String, Object> connections = (Map) tableName.get("connections");
+        Map<String, Object> connections = (Map) tableName.get("Connection");
         Map<String, Object> columns = (Map) connections.get("columns");
         Map<String, Object> uuid = (Map) columns.get("uuid");
         Map<String, Object> scenarioID = (Map) columns.get("scenarioID");
@@ -37,22 +37,26 @@ public class App {
         System.out.println(tables);
 
         SqlGenerator sqlGenerator = new SqlGenerator();
-        sqlGenerator.writeDatabaseFile(tables);
 
         RepositoryGenerator repositoryGenerator = new RepositoryGenerator();
-        repositoryGenerator.writeRepositoryFile(tables);
 
         HibernateGenerator hibernateGenerator = new HibernateGenerator();
-        hibernateGenerator.writeHibernateFile(
-                tableName,
-                columns,
-                uuid,
-                scenarioID,
-                providerUUID,
-                consumerUUID,
-                createdBy,
-                createdAt,
-                entity);
+
+        sqlGenerator.writeDatabaseFile(tables);
+
+        for (Table table : tables) {
+            repositoryGenerator.writeRepositoryFile(table);
+            hibernateGenerator.writeHibernateFile(
+                    tableName,
+                    columns,
+                    uuid,
+                    scenarioID,
+                    providerUUID,
+                    consumerUUID,
+                    createdBy,
+                    createdAt,
+                    entity);
+        }
 
         /*
         System.out.println(schemas.keySet());

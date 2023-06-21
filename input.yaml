@@ -20,47 +20,44 @@ fileLocation:
 
 schemas:
   tables:
-    connections:
+    Connection:
       columns:
-        uuid:
+        uuidcol:
           type: UUID
-          nullable: NOT NULL
+          nullable: false
         scenarioID:
           type: UUID
-          nullable: NOT NULL
+          nullable: true
         providerUUID:
           type: UUID
-          nullable: NOT NULL
+          nullable: false
         consumerUUID:
           type: UUID
-          nullable: NOT NULL
+          nullable: false
         createdBy:
           type: TEXT
-          nullable: NOT NULL
+          nullable: false
         createdAt:
           type: TIMESTAMP
-          nullable: NOT NULL
-      primaryKey: uuid
+          nullable: false
+      primaryKey: uuidcol
     OtherThablle:
       columns:
         uuid:
           type: UUID
-          nullable: boolean
+          nullable: false
         scenarioID:
           type: UUID
-          nullable: boolean
-        providerUUID:
+          nullable: false
+        someThing:
           type: UUID
-          nullable: boolean
-        consumerUUID:
-          type: UUID
-          nullable: boolean
+          nullable: false
         createdBy:
           type: TEXT
-          nullable: boolean
+          nullable: false
         createdAt:
           type: TIMESTAMP
-          nullable: boolean
+          nullable: false
       primaryKey: uuid
   entity:
     Connection:
