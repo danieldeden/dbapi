@@ -28,7 +28,6 @@ public class SchemaParser {
                 tableBuilder.addColumn(column);
             }
             tableBuilder.primaryKey((String) tableNode.get("primaryKey"));
-            tableBuilder.entity((String) entityNode.keySet().stream().toList().get(0));
             tables.add(tableBuilder.build());
         }
         return tables;

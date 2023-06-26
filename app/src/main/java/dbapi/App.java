@@ -20,6 +20,8 @@ public class App {
         InputStream input = new FileInputStream("input.yaml");
 
         Map<String, Object> obj = (Map) yaml.load(input);
+
+        /*
         Map<String, Object> schemas = (Map) obj.get("schemas");
         Map<String, Object> entity = (Map) schemas.get("entity");
         Map<String, Object> tableName = (Map) schemas.get("tables");
@@ -31,10 +33,10 @@ public class App {
         Map<String, Object> consumerUUID = (Map) columns.get("consumerUUID");
         Map<String, Object> createdBy = (Map) columns.get("createdBy");
         Map<String, Object> createdAt = (Map) columns.get("createdAt");
+        */
 
         SchemaParser sp = new SchemaParser();
         List<Table> tables = sp.parse(obj);
-        System.out.println(tables);
 
         SqlGenerator sqlGenerator = new SqlGenerator();
 
@@ -46,16 +48,7 @@ public class App {
 
         for (Table table : tables) {
             repositoryGenerator.writeRepositoryFile(table);
-            hibernateGenerator.writeHibernateFile(
-                    tableName,
-                    columns,
-                    uuid,
-                    scenarioID,
-                    providerUUID,
-                    consumerUUID,
-                    createdBy,
-                    createdAt,
-                    entity);
+            hibernateGenerator.writeHibernateFile(table);
         }
 
         /*

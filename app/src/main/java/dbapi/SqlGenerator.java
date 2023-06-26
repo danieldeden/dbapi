@@ -27,8 +27,7 @@ public class SqlGenerator {
 
             // Loops through all the tables
             for (Table tableItem : tables) {
-                String table = "\n\nCREATE TABLE " + tableItem.getName() + " (\n";
-                databaseWriter.write(table);
+                databaseWriter.write("\n\nCREATE TABLE " + tableItem.getName() + " (\n");
 
                 // Loops through the columns of the tables
                 for (Column columnItem : tableItem.getColumns()) {

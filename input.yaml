@@ -22,7 +22,7 @@ schemas:
   tables:
     Connection:
       columns:
-        uuidcol:
+        uuid:
           type: UUID
           nullable: false
         scenarioID:
@@ -40,7 +40,7 @@ schemas:
         createdAt:
           type: TIMESTAMP
           nullable: false
-      primaryKey: uuidcol
+      primaryKey: uuid
     OtherThablle:
       columns:
         uuid:
@@ -59,8 +59,6 @@ schemas:
           type: TIMESTAMP
           nullable: false
       primaryKey: uuid
-  entity:
-    Connection:
   fileLocation:
     crudRepo: ../src/main/java/se/bnearit/connectionitem/service
     hibernatePOJO: ../src/main/java/se/bnearit/connectionitem/model

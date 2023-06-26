@@ -7,7 +7,7 @@ import se.bnearit.connectionitem.model.Connection;
 /**
  * Interface to interact with the database table for {@link Connection}
  *
- * @author andreas.everos
+ * @author generator
  */
 public interface ConnectionRepository extends CrudRepository<Connection, UUID> {
 }

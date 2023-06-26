@@ -15,22 +15,19 @@ import org.hibernate.annotations.CreationTimestamp;
  * @author andreas.everos
  */
 @Entity
-@Table(name = "Connection")
+@Table(name = "OtherThablle")
 @SuppressWarnings("NullAway")
-public class Connection {
+public class OtherThablle {
 
    @Id
    @Column(name = "uuid", nullable = false)
    private UUID uuid;
 
-   @Column(name = "scenarioID", nullable = true)
+   @Column(name = "scenarioID", nullable = false)
    private UUID scenarioID;
 
-   @Column(name = "providerUUID", nullable = false)
-   private UUID providerUUID;
-
-   @Column(name = "consumerUUID", nullable = false)
-   private UUID consumerUUID;
+   @Column(name = "someThing", nullable = false)
+   private UUID someThing;
 
    @Lob
    @Column(name = "createdBy", nullable = false)
@@ -40,15 +37,14 @@ public class Connection {
    @Column(name = "createdAt", nullable = false)
    private OffsetDateTime createdAt;
 
-   public Connection() {
+   public OtherThablle() {
    }
 
    @SuppressWarnings("MissingJavadocMethod")
-   public Connection(UUID uuid, UUID scenarioID, UUID providerUUID, UUID consumerUUID, TEXT createdBy, TIMESTAMP createdAt) {
+   public OtherThablle(UUID uuid, UUID scenarioID, UUID someThing, TEXT createdBy, TIMESTAMP createdAt) {
       this.uuid = uuid;
       this.scenarioID = scenarioID;
-      this.providerUUID = providerUUID;
-      this.consumerUUID = consumerUUID;
+      this.someThing = someThing;
       this.createdBy = createdBy;
       this.createdAt = createdAt;
    }
@@ -65,20 +61,12 @@ public class Connection {
       this.scenarioID = scenarioID;
    }
 
-   public UUID getProviderUUID() {
-      return providerUUID;
+   public UUID getSomeThing() {
+      return someThing;
    }
 
-   public void setProviderUUID(UUID providerUUID) {
-      this.providerUUID = providerUUID;
-   }
-
-   public UUID getConsumerUUID() {
-      return consumerUUID;
-   }
-
-   public void setConsumerUUID(UUID consumerUUID) {
-      this.consumerUUID = consumerUUID;
+   public void setSomeThing(UUID someThing) {
+      this.someThing = someThing;
    }
 
    public String getCreatedBy() {
