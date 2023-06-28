@@ -13,8 +13,8 @@ columns:
   - Column2
   - Column3
 
-javaSrcPath: src/main/java
-javaPackage: se.bnearit.xxyy
+javaSrcPath: testsrc/main/java
+javaPackage: se.bnearit.connectionitem
 resourcePath: src/main/resources/db/migration
 
 fileLocation:
