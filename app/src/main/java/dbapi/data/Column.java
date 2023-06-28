@@ -3,11 +3,17 @@ package dbapi.data;
 public class Column {
     private String name;
     private String type;
+    private String generated;
     private boolean nullable;
 
-    private Column(String name, String type, boolean nullable) {
+    private Column(String name, String type, String generated, boolean nullable) {
         this.name = name;
         this.type = type;
+        if (generated == null || "".equals(generated)) {
+            this.generated = null;
+        } else {
+            this.generated = generated;
+        }
         this.nullable = nullable;
     }
 
@@ -17,6 +23,10 @@ public class Column {
 
     public String getType() {
         return type;
+    }
+
+    public String getGenerated() {
+        return generated;
     }
 
     public boolean isNullable() {
@@ -35,6 +45,7 @@ public class Column {
     public static class Builder {
         private String name;
         private String type;
+        private String generated;
         private boolean nullable;
 
         public Builder Builder() {
@@ -51,13 +62,18 @@ public class Column {
             return this;
         }
 
+        public Builder generated(String generated) {
+            this.generated = generated;
+            return this;
+        }
+
         public Builder nullable(boolean nullable) {
             this.nullable = nullable;
             return this;
         }
 
         public Column build() {
-            return new Column(this.name, this.type, this.nullable);
+            return new Column(this.name, this.type, this.generated, this.nullable);
         }
     }
 }

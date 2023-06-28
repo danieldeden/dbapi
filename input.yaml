@@ -13,6 +13,10 @@ columns:
   - Column2
   - Column3
 
+javaSrcPath: src/main/java
+javaPackage: se.bnearit.xxyy
+resourcePath: src/main/resources/db/migration
+
 fileLocation:
   - crudRepo: src/main/java/se/bnearit/connectionitem/service
   - hibernatePOJO: src/main/java/se/bnearit/connectionitem/model
@@ -39,6 +43,7 @@ schemas:
           nullable: false
         createdAt:
           type: TIMESTAMP
+          generated: onCreate
           nullable: false
       primaryKey: uuid
     OtherThablle:

@@ -35,6 +35,12 @@ public class App {
         Map<String, Object> createdAt = (Map) columns.get("createdAt");
         */
 
+        String javaPackage = (String) obj.get("javaPackage");
+        /*
+        String javaPackagePath = javaPackage.replace(".", "/");
+        String javaSrcPath = (String) obj.get("javaSrcPath");
+        String javaFullPath = javaSrcPath + "/" + javaPackagePath;
+        */
         SchemaParser sp = new SchemaParser();
         List<Table> tables = sp.parse(obj);
 
@@ -47,7 +53,7 @@ public class App {
         sqlGenerator.writeDatabaseFile(tables);
 
         for (Table table : tables) {
-            repositoryGenerator.writeRepositoryFile(table);
+            repositoryGenerator.writeRepositoryFile(javaPackage, table);
             hibernateGenerator.writeHibernateFile(table);
         }
 

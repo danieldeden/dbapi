@@ -42,18 +42,20 @@ public class HibernateGenerator {
 
             // Annotations and variables
             for (Column columns : table.getColumns()) {
+                String generated = "";
                 String columnType = columns.getType();
                 String columnLob = "";
-                String columnTime = "";
+                if (Objects.equals(columns.getGenerated(), "onCreate")) {
+                    generated = "   @CreationTimestamp\n";
+                }
                 if (Objects.equals(columnType, "TEXT")){            // Ska man ha så här????
                     columnType = "String";
                     columnLob = "   @Lob\n";
                 }
                 else if (Objects.equals(columnType, "TIMESTAMP")){
                     columnType = "OffsetDateTime";
-                    columnTime = "   @CreationTimestamp\n";
                 }
-                String columnAnnotation = columnLob + columnTime + "   @Column(name = \"" + columns.getName() + "\", nullable = " + columns.isNullable() + ")\n";
+                String columnAnnotation = generated + columnLob + "   @Column(name = \"" + columns.getName() + "\", nullable = " + columns.isNullable() + ")\n";
                 String columnVariable = "   private " + columnType + " " + columns.getName() + ";\n\n";
                 hibernateWriter.write(columnAnnotation + columnVariable);
             }
@@ -65,18 +67,26 @@ public class HibernateGenerator {
                     "   @SuppressWarnings(\"MissingJavadocMethod\")\n" +
                     "   public " + table.getName() + "(");
 
-            for (Column columns : table.getColumns()){
-                if (table.getColumns().indexOf(columns) == table.getColumns().size() - 1){
-                    hibernateWriter.write(columns.getType() + " " + columns.getName() + ") {\n");         // Ska createdAt vara med????
+            var filteredColumns = table.getColumns().stream().filter(x -> x.getGenerated() == null).toList();
+            for (Column columns : filteredColumns){
+                var columnType = "UUID";
+                if ("TEXT".equals(columns.getType())) {
+                    columnType = "String";
+                }
+                if ("TIMESTAMP".equals(columns.getType())) {
+                    columnType = "OffsetDateTime";
+                }
+                if (filteredColumns.indexOf(columns) == filteredColumns.size() - 1){
+                    hibernateWriter.write(columnType + " " + columns.getName() + ") {\n");         // Ska createdAt vara med????
                 }
                 else {
-                    hibernateWriter.write(columns.getType() + " " + columns.getName() + ", ");
+                    hibernateWriter.write(columnType + " " + columns.getName() + ", ");
                 }
             }
 
 
             // Variables
-            for (Column columns : table.getColumns()) {
+            for (Column columns : filteredColumns) {
                 hibernateWriter.write("      this." + columns.getName() + " = " + columns.getName() + ";\n");
             }
             hibernateWriter.write("   }\n");

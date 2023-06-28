@@ -23,6 +23,9 @@ public class SchemaParser {
                 Column.Builder columnBuilder = new Column.Builder();
                 columnBuilder.name(columnName);
                 columnBuilder.type((String) columnNode.get("type"));
+                if (columnNode.get("generated") != null) {
+                    columnBuilder.generated((String) columnNode.get("generated"));
+                }
                 columnBuilder.nullable((Boolean) columnNode.get("nullable"));
                 Column column = columnBuilder.build();
                 tableBuilder.addColumn(column);

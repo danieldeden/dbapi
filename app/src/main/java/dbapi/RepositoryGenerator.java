@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class RepositoryGenerator {
-    public void writeRepositoryFile(Table table){
+    public void writeRepositoryFile(String javaPackage, Table table){
         /*
         "package se.bnearit.connectionitem.service;" +
         "\n\n" +
@@ -24,8 +24,9 @@ public class RepositoryGenerator {
         "public interface ConnectionRepository extends CrudRepository<" + entity.keySet().stream().toList().get(0) + "," + uuid.get("type") + "> {\n}";
         */
 
+
         try (FileWriter repositoryWriter = new FileWriter(table.getName() + "Repository.Java")){
-            repositoryWriter.write("package se.bnearit.connectionitem.service;\n\n" +
+            repositoryWriter.write("package " + javaPackage +".service;\n\n" +
                     "import java.util.UUID;\n" +
                     "import org.springframework.data.repository.CrudRepository;\n" +
                     "import se.bnearit.connectionitem.model." + table.getName() + ";\n\n" +
