@@ -8,7 +8,7 @@ import java.util.List;
 
 public class SqlGenerator {
 
-    public void writeDatabaseFile(List<Table> tables) throws FileNotFoundException {
+    public void writeDatabaseFile(String resourcePath, List<Table> tables) throws FileNotFoundException {
         /*
         "CREATE SEQUENCE public.hibernate_sequence;" +
         "\n\n" + "CREATE TABLE " + tableName.keySet().stream().toList().get(0) + " (\n" +
@@ -21,7 +21,7 @@ public class SqlGenerator {
         "CONSTRAINT " + connections.keySet().stream().toList().get(1) + " PRIMARY KEY (" + connections.get("primaryKey") + ")\n" +
         ");";
         */
-        try (FileWriter databaseWriter = new FileWriter("V1__init.sql")) {
+        try (FileWriter databaseWriter = new FileWriter(resourcePath + "V1__init.sql")) {
 
             databaseWriter.write("CREATE SEQUENCE public.hibernate_sequence;");
 

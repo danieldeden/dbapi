@@ -33,7 +33,6 @@ public class OtherThablle {
    @Column(name = "createdBy", nullable = false)
    private String createdBy;
 
-   @CreationTimestamp
    @Column(name = "createdAt", nullable = false)
    private OffsetDateTime createdAt;
 
@@ -41,7 +40,7 @@ public class OtherThablle {
    }
 
    @SuppressWarnings("MissingJavadocMethod")
-   public OtherThablle(UUID uuid, UUID scenarioID, UUID someThing, TEXT createdBy, TIMESTAMP createdAt) {
+   public OtherThablle(UUID uuid, UUID scenarioID, UUID someThing, String createdBy, OffsetDateTime createdAt) {
       this.uuid = uuid;
       this.scenarioID = scenarioID;
       this.someThing = someThing;

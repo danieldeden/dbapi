@@ -9,12 +9,12 @@ import java.util.Objects;
 
 public class HibernateGenerator {
 
-    public void writeHibernateFile(Table table){
-        try (FileWriter hibernateWriter = new FileWriter(table.getName() + ".java")) {
+    public void writeHibernateFile(String javaPackage, String javaFullPath, Table table){
+        try (FileWriter hibernateWriter = new FileWriter(javaFullPath + "/model/" + table.getName() + ".java")) {
 
             // Start
             String writeHibernate =
-                    "package se.bnearit.connectionitem.model;" +
+                    "package " + javaPackage + ".model;" +
                     "\n\n" +
                     "import java.time.OffsetDateTime;\n" +
                     "import java.util.UUID;\n" +
@@ -48,7 +48,7 @@ public class HibernateGenerator {
                 if (Objects.equals(columns.getGenerated(), "onCreate")) {
                     generated = "   @CreationTimestamp\n";
                 }
-                if (Objects.equals(columnType, "TEXT")){            // Ska man ha så här????
+                if (Objects.equals(columnType, "TEXT")){
                     columnType = "String";
                     columnLob = "   @Lob\n";
                 }
